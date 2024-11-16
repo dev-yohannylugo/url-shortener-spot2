@@ -1,0 +1,166 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Url Shortener Documentation",
+        "description": "Url Shortener Documentation",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000",
+            "description": "local server"
+        }
+    ],
+    "paths": {
+        "/url-shortener": {
+            "get": {
+                "tags": [
+                    "Url-Shortener"
+                ],
+                "summary": "Get a list of Urls Shortened",
+                "description": "Get a list of Urls Shortened",
+                "operationId": "40d7d9348f1f7fcd63d453fbfd3be107",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Url-Shortener"
+                ],
+                "summary": "Save a new Url Shortened",
+                "description": "Save a new Url Shortened",
+                "operationId": "10e636ded8ca04d8ee87f7d0e2696fc8",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "url": {
+                                        "description": "Url to Shorten",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "url": "https://www.youtube.com"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/url-shortener/shorten": {
+            "get": {
+                "tags": [
+                    "Url-Shortener"
+                ],
+                "summary": "Get all params for create a Url Shortened",
+                "description": "Get all params for create a Url Shortened",
+                "operationId": "e57c2db4b1ac5a05684d79f3e8cf361e",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/url-shortener/{code}": {
+            "get": {
+                "tags": [
+                    "Url-Shortener"
+                ],
+                "summary": "Get a Url Shortened for code",
+                "description": "Get a Url Shortened for code",
+                "operationId": "ba3f0bbf707418b2fb248b702ea4671a",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "in": "path",
+                        "description": "Parameters",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "string": {
+                                "summary": "An string value.",
+                                "value": "wiPQmlMc"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/url-shortener/{id}": {
+            "delete": {
+                "tags": [
+                    "Url-Shortener"
+                ],
+                "summary": "Get a list of Urls Shortened",
+                "description": "Get a list of Urls Shortened",
+                "operationId": "ef7143916258656617c74eea9df62bf4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Parameters",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "int": {
+                                "summary": "An int value.",
+                                "value": "123"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bererAuh": {
+                "type": "http",
+                "name": "Authorization",
+                "in": "header",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Url-Shortener",
+            "description": "Url-Shortener"
+        }
+    ]
+}

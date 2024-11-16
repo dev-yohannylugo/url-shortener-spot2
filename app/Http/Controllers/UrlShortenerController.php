@@ -5,13 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\UrlShortener;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Redirect;
 
 class UrlShortenerController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *     path="/url-shortener",
+     *     tags={"Url-Shortener"},
+     *     summary="Get a list of Urls Shortened",
+     *     description="Get a list of Urls Shortened",
+     *     @OA\Response(response=200, description="OK"),
+     * )
      */
     public function index()
     {
@@ -21,7 +26,13 @@ class UrlShortenerController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * @OA\Get(
+     *     path="/url-shortener/shorten",
+     *     tags={"Url-Shortener"},
+     *     summary="Get all params for create a Url Shortened",
+     *     description="Get all params for create a Url Shortened",
+     *     @OA\Response(response=200, description="OK"),
+     * )
      */
     public function create()
     {
@@ -29,8 +40,25 @@ class UrlShortenerController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @OA\Post(
+     *     path="/url-shortener",
+     *     tags={"Url-Shortener"},
+     *     summary="Save a new Url Shortened",
+     *     description="Save a new Url Shortened",
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="url", type="string", description="Url to Shorten"),
+     *                 example={"url": "https://www.youtube.com"}
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(response=200, description="OK"),
+     *     @OA\Response(response=422, description="Validation error")
+     * )
      */
+
     public function store(Request $request)
     {
         $validatedData = $request->validate(['url' => 'required|url']);
@@ -44,7 +72,23 @@ class UrlShortenerController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *     path="/url-shortener/{code}",
+     *     tags={"Url-Shortener"},
+     *     summary="Get a Url Shortened for code",
+     *     description="Get a Url Shortened for code",
+     *     @OA\Parameter(
+     *         description="Parameters",
+     *         in="path",
+     *         name="code",
+     *         required=true,
+     *         @OA\Schema(type="string"),
+     *         @OA\Examples(example="string", value="wiPQmlMc", summary="An string value."),
+     *     ),
+     *     @OA\Response(response=200, description="OK"),
+     *     @OA\Response(response=404, description="Not Found")
+     *
+     * )
      */
     public function show($code)
     {
@@ -56,7 +100,23 @@ class UrlShortenerController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @OA\Delete(
+     *     path="/url-shortener/{id}",
+     *     tags={"Url-Shortener"},
+     *     summary="Get a list of Urls Shortened",
+     *     description="Get a list of Urls Shortened",
+     *     @OA\Parameter(
+     *         description="Parameters",
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(type="string"),
+     *         @OA\Examples(example="int", value="123", summary="An int value."),
+     *     ),
+     *     @OA\Response(response=201, description="OK"),
+     *     @OA\Response(response=404, description="Not Found")
+     *
+     * )
      */
     public function destroy($id)
     {
