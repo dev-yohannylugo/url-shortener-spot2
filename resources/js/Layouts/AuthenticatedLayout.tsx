@@ -33,6 +33,13 @@ export default function Authenticated({
                                 >
                                     Dashboard
                                 </NavLink>
+
+                                <NavLink
+                                    href={route('url_shortener.index')}
+                                    active={route().current('url_shortener.index')}
+                                >
+                                    Url Shortener
+                                </NavLink>
                             </div>
                         </div>
 
