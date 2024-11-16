@@ -6,6 +6,7 @@ use App\Models\UrlShortener;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Cache;
 
 class UrlShortenerController extends Controller
 {
@@ -20,8 +21,12 @@ class UrlShortenerController extends Controller
      */
     public function index()
     {
+        $urls = Cache::remember('urls', 86400, function () {
+            return UrlShortener::all();
+        });
+
         return Inertia::render('UrlShortener/Index', [
-            'urls' => UrlShortener::paginate(15)
+            'urls' => $urls
         ]);
     }
 
@@ -67,6 +72,7 @@ class UrlShortenerController extends Controller
             'code' =>  UrlShortener::generateShortCode(),
             'original_url' => $validatedData['url']
         ]);
+        Cache::forget('urls');
 
         return to_route('url_shortener.index');
     }
@@ -92,7 +98,9 @@ class UrlShortenerController extends Controller
      */
     public function show($code)
     {
-        $shortUrl = UrlShortener::where('code', $code)->firstOrFail();
+        $shortUrl = Cache::remember($code, 86400, function () use ($code) {
+            return UrlShortener::where('code', $code)->firstOrFail();
+        });
 
         return Inertia::render('UrlShortener/Show', [
             'url_shortened' => $shortUrl,
@@ -122,6 +130,9 @@ class UrlShortenerController extends Controller
     {
         $shortUrl = UrlShortener::findOrFail($id);
         $shortUrl->delete();
+        Cache::forget($shortUrl->code);
+        Cache::forget('urls');
+
         return Redirect::back()->with('success', 'Url deleted successfully.');
     }
 }

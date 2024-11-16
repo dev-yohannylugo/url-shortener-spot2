@@ -9,7 +9,7 @@ import SecondaryButton from "@/Components/SecondaryButton";
 
 export default function Index({
     urls,
-}: PageProps<{ urls: PaginatedData<UrlShortener> }>) {
+}: PageProps<{ urls: UrlShortener[] }>) {
     const [confirmingDeletion, setConfirmingDeletion] = useState<number | null>(
         null
     );
@@ -101,7 +101,7 @@ export default function Index({
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {urls.data.map((url) => (
+                                    {urls?.map((url) => (
                                         <tr
                                             className="bg-white border-b"
                                             key={url.id}
