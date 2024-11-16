@@ -14,7 +14,13 @@ use Inertia\Response;
 class ProfileController extends Controller
 {
     /**
-     * Display the user's profile form.
+     * @OA\Get(
+     *     path="/profile",
+     *     tags={"Profile"},
+     *     summary="Find all the parameters for the profile update form",
+     *     description="Find all the parameters for the profile update form",
+     *     @OA\Response(response=200, description="OK"),
+     * )
      */
     public function edit(Request $request): Response
     {
@@ -24,8 +30,25 @@ class ProfileController extends Controller
         ]);
     }
 
-    /**
-     * Update the user's profile information.
+      /**
+     * @OA\Patch(
+     *     path="/profile",
+     *     tags={"Profile"},
+     *     summary="Update profile",
+     *     description="Update profile",
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="name", type="string", description="Name of profile"),
+     *                 @OA\Property(property="email", type="string", description="Email of profile"),
+     *                 example={"name": "Juan Perez", "email": "juan.perez@spot2.com"}
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(response=303, description="OK"),
+     *     @OA\Response(response=302, description="Validation error")
+     * )
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
@@ -40,8 +63,15 @@ class ProfileController extends Controller
         return Redirect::route('profile.edit');
     }
 
-    /**
-     * Delete the user's account.
+       /**
+     * @OA\Delete(
+     *     path="/profile",
+     *     tags={"Profile"},
+     *     summary="Delete user and profile",
+     *     description="Delete user and profile",
+     *     @OA\Response(response=303, description="OK"),
+     *     @OA\Response(response=302, description="Validation error")
+     * )
      */
     public function destroy(Request $request): RedirectResponse
     {

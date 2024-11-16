@@ -7,11 +7,81 @@
     },
     "servers": [
         {
-            "url": "http://127.0.0.1:8000",
+            "url": "http://localhost:8000",
             "description": "local server"
         }
     ],
     "paths": {
+        "/profile": {
+            "get": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Find all the parameters for the profile update form",
+                "description": "Find all the parameters for the profile update form",
+                "operationId": "8cfcc99d8d1aa366314cd8abf9cd9c9a",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Delete user and profile",
+                "description": "Delete user and profile",
+                "operationId": "1d6a5c6489e35a763aa97ebef12863ce",
+                "responses": {
+                    "303": {
+                        "description": "OK"
+                    },
+                    "302": {
+                        "description": "Validation error"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Update profile",
+                "description": "Update profile",
+                "operationId": "354f5b23296bed4036564563e7423f43",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Name of profile",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "Email of profile",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "name": "Juan Perez",
+                                    "email": "juan.perez@spot2.com"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "303": {
+                        "description": "OK"
+                    },
+                    "302": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
         "/url-shortener": {
             "get": {
                 "tags": [
@@ -55,7 +125,7 @@
                     "200": {
                         "description": "OK"
                     },
-                    "422": {
+                    "302": {
                         "description": "Validation error"
                     }
                 }
@@ -158,6 +228,10 @@
         }
     },
     "tags": [
+        {
+            "name": "Profile",
+            "description": "Profile"
+        },
         {
             "name": "Url-Shortener",
             "description": "Url-Shortener"

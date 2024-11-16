@@ -55,7 +55,7 @@ class UrlShortenerController extends Controller
      *         )
      *     ),
      *     @OA\Response(response=200, description="OK"),
-     *     @OA\Response(response=422, description="Validation error")
+     *     @OA\Response(response=302, description="Validation error")
      * )
      */
 
