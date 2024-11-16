@@ -1,0 +1,240 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Url Shortener Documentation",
+        "description": "Url Shortener Documentation",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000",
+            "description": "local server"
+        }
+    ],
+    "paths": {
+        "/profile": {
+            "get": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Find all the parameters for the profile update form",
+                "description": "Find all the parameters for the profile update form",
+                "operationId": "8cfcc99d8d1aa366314cd8abf9cd9c9a",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Delete user and profile",
+                "description": "Delete user and profile",
+                "operationId": "1d6a5c6489e35a763aa97ebef12863ce",
+                "responses": {
+                    "303": {
+                        "description": "OK"
+                    },
+                    "302": {
+                        "description": "Validation error"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Update profile",
+                "description": "Update profile",
+                "operationId": "354f5b23296bed4036564563e7423f43",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Name of profile",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "Email of profile",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "name": "Juan Perez",
+                                    "email": "juan.perez@spot2.com"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "303": {
+                        "description": "OK"
+                    },
+                    "302": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/url-shortener": {
+            "get": {
+                "tags": [
+                    "Url-Shortener"
+                ],
+                "summary": "Get a list of Urls Shortened",
+                "description": "Get a list of Urls Shortened",
+                "operationId": "40d7d9348f1f7fcd63d453fbfd3be107",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Url-Shortener"
+                ],
+                "summary": "Save a new Url Shortened",
+                "description": "Save a new Url Shortened",
+                "operationId": "10e636ded8ca04d8ee87f7d0e2696fc8",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "url": {
+                                        "description": "Url to Shorten",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "url": "https://www.youtube.com"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "302": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/url-shortener/shorten": {
+            "get": {
+                "tags": [
+                    "Url-Shortener"
+                ],
+                "summary": "Get all params for create a Url Shortened",
+                "description": "Get all params for create a Url Shortened",
+                "operationId": "e57c2db4b1ac5a05684d79f3e8cf361e",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/url-shortener/{code}": {
+            "get": {
+                "tags": [
+                    "Url-Shortener"
+                ],
+                "summary": "Get a Url Shortened for code",
+                "description": "Get a Url Shortened for code",
+                "operationId": "ba3f0bbf707418b2fb248b702ea4671a",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "in": "path",
+                        "description": "Parameters",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "string": {
+                                "summary": "An string value.",
+                                "value": "wiPQmlMc"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/url-shortener/{id}": {
+            "delete": {
+                "tags": [
+                    "Url-Shortener"
+                ],
+                "summary": "Get a list of Urls Shortened",
+                "description": "Get a list of Urls Shortened",
+                "operationId": "ef7143916258656617c74eea9df62bf4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Parameters",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "int": {
+                                "summary": "An int value.",
+                                "value": "123"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bererAuh": {
+                "type": "http",
+                "name": "Authorization",
+                "in": "header",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Profile",
+            "description": "Profile"
+        },
+        {
+            "name": "Url-Shortener",
+            "description": "Url-Shortener"
+        }
+    ]
+}
