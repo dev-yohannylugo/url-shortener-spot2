@@ -68,10 +68,10 @@ Generate application key:
 ```sh
 php artisan key:generate
 ```
-Create an MySQL database. You can also use another database (SQLite, Postgres), simply update your configuration accordingly.
+Create an SQLite database. You can also use another database (MySQL, Postgres), simply update your configuration accordingly.
 
 ```sh
-CREATE DATABASE url_shortener_spot2;
+touch database/database.sqlite
 ```
 
 Run database migrations:
