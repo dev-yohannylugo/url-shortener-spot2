@@ -22,8 +22,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/url-shortener', [UrlShortenerController::class, 'index'])->name('url_shortener.index');
     Route::get('/url-shortener/shorten', [UrlShortenerController::class, 'create'])->name('url_shortener.create');
     Route::post('/url-shortener/shorten', [UrlShortenerController::class, 'store'])->name('url_shortener.store');
-    Route::delete('/url-shortener/{id}', [UrlShortenerController::class, 'destroy'])->name('url_shortener.destroy');
     Route::get('/url-shortener/{code}', [UrlShortenerController::class, 'show'])->name('url_shortener.show');
+    Route::delete('/url-shortener/{id}', [UrlShortenerController::class, 'destroy'])->name('url_shortener.destroy');
 });
 
 require __DIR__.'/auth.php';
