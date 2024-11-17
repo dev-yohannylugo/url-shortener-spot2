@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\UrlShortener;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 /**
@@ -9,8 +10,6 @@ use Illuminate\Support\Str;
  */
 class UrlShortenerFactory extends Factory
 {
-    protected static ?string $url;
-
     /**
      * Define the model's default state.
      *
@@ -19,8 +18,8 @@ class UrlShortenerFactory extends Factory
     public function definition(): array
     {
         return [
-            'code' => fake()->unique(),
-            'original_url' => static::$url ??= fake()->slug(),
+            'code' =>  UrlShortener::generateShortCode(),
+            'original_url' => fake()->url(),
         ];
     }
 }

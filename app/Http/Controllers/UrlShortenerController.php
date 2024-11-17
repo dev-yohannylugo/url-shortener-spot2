@@ -22,7 +22,7 @@ class UrlShortenerController extends Controller
     public function index()
     {
         $urls = Cache::remember('urls', 86400, function () {
-            return UrlShortener::all();
+            return UrlShortener::orderBy('id', 'desc')->get();
         });
 
         return Inertia::render('UrlShortener/Index', [
