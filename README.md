@@ -97,6 +97,8 @@ You're ready to go! [Url Shortener](http://127.0.0.1:8000/) in your browser, and
 - **Username:** admin@spot2.com
 - **Password:** Spot2Pass
 
+To enter the production version is: http://ec2-18-221-204-190.us-east-2.compute.amazonaws.com/
+
 ## Running tests
 
 To run the Ping CRM tests, run:
