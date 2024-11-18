@@ -18,7 +18,6 @@ Url Shortener is a technical challenge designed by Spot2 to test the knowledge o
 - [Inertia - React](https://inertiajs.com/routing).
 - [Composer](https://getcomposer.org/download).
 - [Node Js](https://nodejs.org/en/download/package-manager).
-- [Mysql](https://www.mysql.com).
 - [Redis](https://redis.io/docs/latest).
 
 ## Installation
