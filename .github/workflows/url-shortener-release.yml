@@ -19,7 +19,7 @@ jobs:
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
     - name: Install Dependencies Composer
-      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --no-dev
     - name: Generate key
       run: php artisan key:generate
     - name: Directory Permissions
@@ -37,22 +37,13 @@ jobs:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
       run: php artisan test
-  
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Install dependencies
-        run: composer install --no-dev
-      - name: Build assets
-        run: npm run build
-      - name: Create archive
-        run: zip -r deploy.zip public
-      - name: Deploy to server
-        uses: appleboy/scp-action@master
-        with:
-          host: ec2-18-191-110-44.us-east-2.compute.amazonaws.com
-          username: ubuntu
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: ./deploy.zip
-          target: /var/www/url-shortener-spot2
+    - name: Create archive
+      run: zip -r deploy.zip public
+    - name: Deploy to server
+      uses: appleboy/scp-action@master
+      with:
+        host: ec2-18-191-110-44.us-east-2.compute.amazonaws.com
+        username: ubuntu
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        source: ./deploy.zip
+        target: /var/www/url-shortener-spot2
