@@ -7,9 +7,8 @@ on:
     branches: [ "master" ]
 
 jobs:
-  laravel-tests:
+  testing:
     runs-on: ubuntu-latest
-
     steps:
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
@@ -37,13 +36,3 @@ jobs:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
       run: php artisan test
-    - name: Create archive
-      run: zip -r deploy.zip public
-    - name: Deploy to server
-      uses: appleboy/scp-action@master
-      with:
-        host: ec2-18-191-110-44.us-east-2.compute.amazonaws.com
-        username: ubuntu
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        source: ./deploy.zip
-        target: /var/www/url-shortener-spot2
