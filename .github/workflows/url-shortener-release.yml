@@ -17,11 +17,4 @@ jobs:
           username: ubuntu
           port: 22
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            cd /var/www/url-shortener-spot2
-            git pull
-            npm install
-            composer install
-            npm run build
-            php artisan migrate --seed
-            sudo systemctl restart nginx
+          script: cd /var/www/url-shortener-spot2 && git pull && npm install && composer install && npm run build && php artisan migrate --seed && sudo systemctl restart nginx
