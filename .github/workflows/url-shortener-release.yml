@@ -39,20 +39,20 @@ jobs:
   
   deploy:
     needs: test
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: SSH into EC2
-      uses: ssh-action/ssh-key-action@v2
-      with:
-        host: http://ec2-18-221-204-190.us-east-2.compute.amazonaws.com/
-        username: ubuntu
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-    - name: Run commands deploy
-      run: |
-        cd /var/www/url-shortener-spot2
-        git pull
-        npm install
-        composer install
-        npm run build
-        php artisan migrate --seed
-        sudo systemctl restart nginx
+      - name: Run commands deploy
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: http://ec2-18-221-204-190.us-east-2.compute.amazonaws.com/
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /var/www/url-shortener-spot2
+            git pull
+            npm install
+            composer install
+            npm run build
+            php artisan migrate --seed
+            sudo systemctl restart nginx
+          
