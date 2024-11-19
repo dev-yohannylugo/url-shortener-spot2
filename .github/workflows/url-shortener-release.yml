@@ -16,6 +16,6 @@ jobs:
           host: http://ec2-18-221-204-190.us-east-2.compute.amazonaws.com/
           username: ubuntu
           port: 22
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          key: ${{ input.SSH_PRIVATE_KEY }}
           script: cd /var/www/url-shortener-spot2
           
