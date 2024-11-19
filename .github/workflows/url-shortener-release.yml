@@ -50,11 +50,14 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /var/www/url-shortener-spot2
+            git stash
             git pull --force
             npm install
             composer install
             npm run build
             rm ./database/database.sqlite
+            touch database/database.sqlite
             php artisan migrate --seed
+            sudo chmod -R 777 .
             sudo systemctl restart nginx
           
