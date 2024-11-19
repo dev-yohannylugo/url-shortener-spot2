@@ -7,7 +7,7 @@ on:
     branches: [ "master" ]
 
 jobs:
-  testing:
+  test:
     runs-on: ubuntu-latest
     steps:
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
@@ -36,3 +36,23 @@ jobs:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
       run: php artisan test
+  
+  deploy:
+    needs: test
+    steps:
+    - uses: actions/checkout@v3
+    - name: SSH into EC2
+      uses: ssh-action/ssh-key-action@v2
+      with:
+        host: http://ec2-18-221-204-190.us-east-2.compute.amazonaws.com/
+        username: ubuntu
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+    - name: Run commands deploy
+      run: |
+        cd /var/www/url-shortener-spot2
+        git pull
+        npm install
+        composer install
+        npm run build
+        php artisan migrate --seed
+        sudo systemctl restart nginx
