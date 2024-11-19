@@ -7,23 +7,23 @@ on:
     branches: [ "master" ]
 
 jobs:
-   deploy:
-      if: github.ref == 'refs/heads/master'
-      runs-on: [ubuntu-latest]
+  run_example_job:
+      runs-on: ubuntu-latest
+      timeout-minutes: 5
       steps:
-        - uses: actions/checkout@v1
-        - name: Push to server
-          uses: appleboy/ssh-action@master
-          with:
-            host: http://ec2-18-221-204-190.us-east-2.compute.amazonaws.com/
-            username: ubuntu
-            port: 22
-            key: ${{ secrets.SSH_PRIVATE_KEY }}
-            script: |
-              cd /var/www/url-shortener-spot2
-              git pull
-              npm install
-              composer install
-              npm run build
-              php artisan migrate --seed
-              sudo systemctl restart nginx
+      - name: print out example job
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          command_timeout: 30m
+          host: http://ec2-18-221-204-190.us-east-2.compute.amazonaws.com/
+          username: ubuntu
+          port: 22
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /var/www/url-shortener-spot2
+            git pull
+            npm install
+            composer install
+            npm run build
+            php artisan migrate --seed
+            sudo systemctl restart nginx
