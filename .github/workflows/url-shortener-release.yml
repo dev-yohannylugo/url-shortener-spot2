@@ -13,9 +13,9 @@ jobs:
       - name: executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@v1.2.0
         with:
-          host: http://ec2-18-221-204-190.us-east-2.compute.amazonaws.com/
+          host: ec2-18-221-204-190.us-east-2.compute.amazonaws.com
           username: ubuntu
           port: 22
-          key: ${{ input.SSH_PRIVATE_KEY }}
-          script: cd /var/www/url-shortener-spot2
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: pwd
           
