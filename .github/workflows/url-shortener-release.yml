@@ -8,14 +8,21 @@ on:
 
 jobs:
   deploy:
-      runs-on: ubuntu-latest
-      steps:
-      - name: executing remote ssh commands using ssh key
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run commands deploy
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ec2-18-221-204-190.us-east-2.compute.amazonaws.com
           username: ubuntu
           port: 22
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: pwd
+          script: |
+            cd /var/www/url-shortener-spot2
+            git pull
+            npm install
+            composer install
+            npm run build
+            php artisan migrate --seed
+            sudo systemctl restart nginx
           
